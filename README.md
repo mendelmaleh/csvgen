@@ -1,5 +1,9 @@
 # csvgen
 
+```sh
+go install git.sr.ht/~mendelmaleh/csvgen@latest
+```
+
 Generate Go struct definitions from CSV headers, with deduplication across structs.
 
 For example, these three headers from Amazon order history reports:
