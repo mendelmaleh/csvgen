@@ -4,13 +4,26 @@ Generate Go struct definitions from CSV headers, with deduplication across struc
 
 For example, these three headers from Amazon order history reports:
 
+```sh
+head -n1 *.csv
+```
+
 ```csv
+==> items.csv <==
 Order Date,Order ID,Title,Category,ASIN/ISBN,UNSPSC Code,Website,Release Date,Condition,Seller,Seller Credentials,List Price Per Unit,Purchase Price Per Unit,Quantity,Payment Instrument Type,Purchase Order Number,PO Line Number,Ordering Customer Email,Shipment Date,Shipping Address Name,Shipping Address Street 1,Shipping Address Street 2,Shipping Address City,Shipping Address State,Shipping Address Zip,Order Status,Carrier Name & Tracking Number,Item Subtotal,Item Subtotal Tax,Item Total,Tax Exemption Applied,Tax Exemption Type,Exemption Opt-Out,Buyer Name,Currency,Group Name
+
+==> orders.csv <==
 Order Date,Order ID,Payment Instrument Type,Website,Purchase Order Number,Ordering Customer Email,Shipment Date,Shipping Address Name,Shipping Address Street 1,Shipping Address Street 2,Shipping Address City,Shipping Address State,Shipping Address Zip,Order Status,Carrier Name & Tracking Number,Subtotal,Shipping Charge,Tax Before Promotions,Total Promotions,Tax Charged,Total Charged,Buyer Name,Group Name
+
+==> returns.csv <==
 Order ID,Order Date,Title,Category,ASIN/ISBN,Website,Purchase Order Number,Seller,Seller Credentials,Ordering Customer Email,Shipment Date,Shipping Address Name,Shipping Address Street 1,Shipping Address Street 2,Shipping Address City,Shipping Address State,Shipping Address Zip,Return Date,Return Reason,Quantity,Buyer Name,Group Name
 ```
 
 Results in three component structs for deduplication (`ABC, AB, AC`) and three base structs (`A, B, C`):
+
+```sh
+head -qn1 *.csv | csvgen
+```
 
 ```go
 package main
